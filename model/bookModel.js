@@ -1,6 +1,8 @@
 /**
  * 数据模型
  * 书详情
+ * 保存所有书名和id
+ * 根据id查找所有书的章节
  */
 
 const mongoose = require('../dataHelp/mongoose');
@@ -33,6 +35,10 @@ bookModel.close = async ()=>{
  * 获取列表第一列并删除
  */
 bookModel.getFirstAndRemove = async () => {
-    return await model.findOneAndRemove();
+    const data = await model.findOne();
+    if(data){
+        await model.deleteMany({id: data.id})
+    }
+    return data;
 }
 module.exports = bookModel;
