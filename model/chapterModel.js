@@ -28,9 +28,9 @@ chapter.save = async (params)=>{
  */
 chapter.getOneBook = async () => {
     const data = await model.findOne();
-    // if(data){
-    //     await model.deleteMany({id: data.id})//删除这本书的信息
-    // }
+    if(data){
+        await model.deleteMany({id: data.id})//删除这本书的信息
+    }
     return data;
 }
 module.exports = chapter;

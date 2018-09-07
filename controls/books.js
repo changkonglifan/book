@@ -12,26 +12,25 @@ const logger = require('../config/log4');
  * 获取所有的书本列表
  */
 const getAllBooks = (page,total) => {
-    // let len = 0;
-    // if(page <= total){
-    //     superagent
-    //         .get(`${website.baseurl}/quanben/c0/c0/b9/u1/p${page}/v0/s1/t0/ALL.html`)
-    //         .end((err,res)=>{
-    //             if(err)
-    //                 throw err;
-    //             const $ = cheerio.load(res.text);
-    //             len = $('.pagenumber')[0].attribs.count;//最大页数
-    //             if(saveAllBooks($)){
-    //                 //执行完成
-    //                 getAllBooks(page + 1, len);
-    //                 logger.info(`第${page}页完成`)
-    //             }
-    //         })
-    // }else{
-    //     //存储完成
-    //     getChapter();
-    // }
-    getChapter();
+    let len = 0;
+    if(page <= total){
+        superagent
+            .get(`${website.baseurl}/quanben/c0/c0/b9/u1/p${page}/v0/s1/t0/ALL.html`)
+            .end((err,res)=>{
+                if(err)
+                    throw err;
+                const $ = cheerio.load(res.text);
+                len = $('.pagenumber')[0].attribs.count;//最大页数
+                if(saveAllBooks($)){
+                    //执行完成
+                    getAllBooks(page + 1, len);
+                    logger.info(`第${page}页完成`)
+                }
+            })
+    }else{
+        //存储完成
+        getChapter();
+    }
 }
 /**
  * 解析获取的页面数据
